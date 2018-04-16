@@ -1,0 +1,36 @@
+<div class="space-beetwen">
+  <h1>Productos</h1><br>
+  <%= link_to "Nuevo Producto", new_product_path, class: "btn btn-primary" %>
+</div>
+<table class="table" style="margin-top: 20px;">
+  <thead>
+    <tr>
+      <th scope="col">Nombre</th>
+      <th scope="col">Precio</th>
+      <th scope="col">Categorías</th>
+      <th scope="col"></th>
+    </tr>
+  </thead>
+  <tbody>
+  	<% @products.each do |product| %>
+    <tr>
+      <th scope="row"><%= product.name %></th>
+      <td><%= product.price %></td>
+      <td>
+        
+        <% if product.categories.count.eql?(0) %>
+            <%= "" %>
+        <% elsif product.categories.count.eql?(1) %>
+            <%= product.categories[0].name  %>
+        <% else %>
+          <% arr = [] %>
+          <%  product.categories.each_with_index do |x, y| %>
+             <% arr[y] = x.name %>
+          <% end %>
+            <%= "#{arr[0...-1].join(", ")} y #{arr[-1]}." %>
+      <% end %></td>
+      <td><%= link_to "Editar", edit_product_path(product) %>     <%= link_to "Eliminar", product_path(product), method: :delete %></td>      
+    </tr>
+    <% end %>
+  </tbody>
+</table>
